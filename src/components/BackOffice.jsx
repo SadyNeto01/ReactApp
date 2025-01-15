@@ -14,7 +14,7 @@ const BackOffice = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
- 
+  // Fetch inicial
   useEffect(() => {
     const fetchTrips = async () => {
       try {
@@ -28,7 +28,7 @@ const BackOffice = () => {
     fetchTrips();
   }, []);
 
-  
+  // Validação
   const validateTrip = ({ local, descricao, ano }) => {
     if (!local || !descricao || !ano) {
       return 'Todos os campos são obrigatórios!';
@@ -39,7 +39,7 @@ const BackOffice = () => {
     return null;
   };
 
-
+  // Adicionar nova viagem
   const handleAddTrip = async () => {
     const validationError = validateTrip(newTrip);
     if (validationError) {
@@ -48,8 +48,8 @@ const BackOffice = () => {
     }
 
     try {
-      await createBook(newTrip);
-      setTrips((prevTrips) => [...prevTrips, newTrip]);
+      const addedTrip = await createBook(newTrip);
+      setTrips((prevTrips) => [...prevTrips, addedTrip.página1]);
       setNewTrip({ id: '', local: '', descricao: '', ano: '' });
       setShowAddForm(false);
     } catch (error) {
@@ -57,13 +57,13 @@ const BackOffice = () => {
     }
   };
 
-
+  // Editar viagem
   const handleEditTrip = (trip) => {
     setEditingTrip(trip);
     setShowEditForm(true);
   };
 
-
+  // Atualizar viagem
   const handleUpdateTrip = async () => {
     const validationError = validateTrip(editingTrip);
     if (validationError) {
@@ -85,7 +85,7 @@ const BackOffice = () => {
     }
   };
 
-
+  // Excluir viagem
   const handleDeleteTrip = async (id) => {
     try {
       await deleteBook(id);
@@ -100,12 +100,12 @@ const BackOffice = () => {
       <div className="app-container">
         <h2 className="app-title">Gerenciar Viagens</h2>
 
-        {/* Botão para abrir/fechar formulário de adição */}
+        {/* Botão de adicionar */}
         <button onClick={() => setShowAddForm(!showAddForm)}>
           {showAddForm ? 'Fechar Formulário' : 'Adicionar Viagem'}
         </button>
 
-        {/* Formulário para adicionar viagem */}
+        {/* Formulário para adicionar */}
         {showAddForm && (
           <div className="add-book-form">
             <h3>Adicionar Viagem</h3>
@@ -133,7 +133,7 @@ const BackOffice = () => {
           </div>
         )}
 
-        {/* Formulário para editar viagem */}
+        {/* Formulário para editar */}
         {showEditForm && (
           <div className="edit-book-form">
             <h3>Editar Viagem</h3>
@@ -173,6 +173,7 @@ const BackOffice = () => {
               trip={trip}
               onEdit={handleEditTrip}
               onDelete={handleDeleteTrip}
+              isBackOffice // Passando a propriedade
             />
           ))}
         </div>
@@ -182,4 +183,3 @@ const BackOffice = () => {
 };
 
 export default BackOffice;
-

@@ -80,107 +80,131 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Lista de Livros */
+/* Lista de Viagens */
 .book-list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 livros por linha */
+  grid-template-columns: repeat(5, 1fr); /* 5 cards por linha */
   gap: 20px;
   padding: 20px;
   margin-top: 70px; /* Para compensar o cabeçalho fixo */
+  justify-content: center;
 }
 
-.book-card {
+/* Estado Compacto */
+.book-card.compact {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 15px;
   transition: transform 0.3s ease-in-out;
+  height: 150px;
+  cursor: pointer;
 }
 
-.book-card p {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.book-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.book-card h3 {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.book-card:hover {
+.book-card.compact:hover {
   transform: scale(1.05);
-  background-color: #f8f9fa;
 }
 
-/* Formulários */
-.add-book-form,
-.edit-book-form {
+/* Estado Expandido */
+.book-card.expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
-  margin: 20px auto;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  height: 500px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.add-book-form h3,
-.edit-book-form h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
+.book-card.expanded .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.book-card.expanded .card-location {
+  font-size: 1.4rem;
+  font-weight: bold;
   color: #333;
 }
 
-.add-book-form input,
-.edit-book-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.book-card.expanded .card-year {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #777;
+}
+
+.book-card.expanded .card-description {
   font-size: 1rem;
+  color: #555;
+  text-align: justify;
+  line-height: 1.5;
+  overflow-y: auto;
+  flex-grow: 1;
+  margin: 10px 0;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
-.add-book-form input:focus,
-.edit-book-form input:focus {
-  border-color: #4caf50;
-  outline: none;
+/* Avaliação por Estrelas */
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4px;
 }
 
-.add-book-form button,
-.edit-book-form button {
-  width: 100%;
-  background-color: #4caf50;
+.star-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #ccc;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.star-button:hover {
+  transform: scale(1.2);
+  color: #ffc107;
+}
+
+.star-button.selected {
+  color: #ffc107;
+}
+
+/* Fixando Botão de Fechar */
+.book-card.expanded .close-button {
+  background-color: #dc3545;
   color: white;
   border: none;
-  padding: 10px;
-  font-size: 1rem;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  align-self: center;
+  margin-top: 10px;
 }
 
-.add-book-form button:hover,
-.edit-book-form button:hover {
-  background-color: #45a049;
+.book-card.expanded .close-button:hover {
+  background-color: #c82333;
 }
 
-/* Formulário de Login */
-.login-form {
+/* Estilo dos Formulários */
+.form-container {
   background-color: white;
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 400px;
   margin: 50px auto;
@@ -188,14 +212,13 @@ button:hover {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.login-form h2 {
+.form-container h3 {
   margin-bottom: 20px;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #333;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"] {
+.form-container input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -204,17 +227,16 @@ button:hover {
   font-size: 1rem;
 }
 
-.login-form input[type="text"]:focus,
-.login-form input[type="password"]:focus {
+.form-container input:focus {
   border-color: #4caf50;
   outline: none;
 }
 
-.login-form button {
+.form-container button {
   width: 100%;
   background-color: #4caf50;
-  padding: 10px;
-  font-size: 1rem;
+  padding: 12px;
+  font-size: 1.2rem;
   border-radius: 5px;
   border: none;
   color: white;
@@ -222,83 +244,68 @@ button:hover {
   transition: background-color 0.3s ease;
 }
 
-.login-form button:hover {
+.form-container button:hover {
   background-color: #45a049;
 }
 
-.login-form p {
-  margin-top: 15px;
-  color: #777;
-  font-size: 0.9rem;
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
-.login-form a {
-  color: #4caf50;
-  text-decoration: none;
-  font-weight: bold;
+.search-input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
-.login-form a:hover {
-  text-decoration: underline;
+.search-input:focus {
+  border-color: #4caf50;
+  outline: none;
 }
 
-/* Animação para exibir o formulário */
+
+/* Animação */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
 /* Responsividade */
 @media (max-width: 1200px) {
   .book-list {
-    grid-template-columns: repeat(4, 1fr); /* 4 livros por linha */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .book-list {
-    grid-template-columns: repeat(2, 1fr); /* 2 livros por linha */
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .add-book-form {
+  .form-container {
     max-width: 90%;
   }
 }
 
 @media (max-width: 480px) {
   .book-list {
-    grid-template-columns: 1fr; /* 1 livro por linha */
+    grid-template-columns: 1fr;
   }
 
-  .add-book-form {
+  .form-container {
     padding: 15px;
   }
-}
-.rating {
-  margin-top: 10px;
-}
-
-.star-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #ffc107;
-  margin: 0 5px;
-  transition: transform 0.2s ease;
-}
-
-.star-button:hover {
-  transform: scale(1.2);
-}
-
-.star-button.selected {
-  font-weight: bold;
-  color: #ff9900;
 }
