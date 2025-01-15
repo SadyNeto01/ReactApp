@@ -14,7 +14,7 @@ const BackOffice = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  // Carregar viagens ao iniciar
+ 
   useEffect(() => {
     const fetchTrips = async () => {
       try {
@@ -28,7 +28,7 @@ const BackOffice = () => {
     fetchTrips();
   }, []);
 
-  // Validação de dados
+  
   const validateTrip = ({ local, descricao, ano }) => {
     if (!local || !descricao || !ano) {
       return 'Todos os campos são obrigatórios!';
@@ -39,7 +39,7 @@ const BackOffice = () => {
     return null;
   };
 
-  // Adicionar nova viagem
+
   const handleAddTrip = async () => {
     const validationError = validateTrip(newTrip);
     if (validationError) {
@@ -57,13 +57,13 @@ const BackOffice = () => {
     }
   };
 
-  // Preparar viagem para edição
+
   const handleEditTrip = (trip) => {
     setEditingTrip(trip);
     setShowEditForm(true);
   };
 
-  // Salvar alterações na viagem
+
   const handleUpdateTrip = async () => {
     const validationError = validateTrip(editingTrip);
     if (validationError) {
@@ -85,7 +85,7 @@ const BackOffice = () => {
     }
   };
 
-  // Excluir viagem
+
   const handleDeleteTrip = async (id) => {
     try {
       await deleteBook(id);

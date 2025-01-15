@@ -4,15 +4,15 @@ import BookCard from './BookCard';
 
 const FrontOffice = () => {
   const [trips, setTrips] = useState([]);
-  const [ratings, setRatings] = useState({}); // Estado local para armazenar avaliações
+  const [ratings, setRatings] = useState({}); 
 
-  // Carregar viagens ao iniciar
+
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const data = await getBooks(); // Chamada à API para obter as viagens
+        const data = await getBooks();
         if (Array.isArray(data)) {
-          setTrips(data); // Atualiza o estado com as viagens recebidas
+          setTrips(data); 
         } else {
           console.error('Os dados retornados não são uma lista válida:', data);
         }
@@ -24,7 +24,7 @@ const FrontOffice = () => {
     fetchTrips();
   }, []);
 
-  // Função para registrar a avaliação
+ 
   const handleRateTrip = (id, rating) => {
     setRatings((prevRatings) => ({ ...prevRatings, [id]: rating }));
   };

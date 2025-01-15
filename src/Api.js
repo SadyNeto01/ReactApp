@@ -1,7 +1,6 @@
 const API_URL = 'https://api.sheety.co/51b65bad1838e501d207e2f5f36dadf4/books/página1';
 
 
-// Método GET - Buscar todas as viagens
 export const getBooks = async () => {
   try {
     const response = await fetch(API_URL);
@@ -9,14 +8,14 @@ export const getBooks = async () => {
       throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
     const data = await response.json();
-    return data.página1; // Certifique-se de que "página1" corresponde à estrutura do Sheety
+    return data.página1; 
   } catch (error) {
     console.error('Erro ao buscar viagens:', error);
     throw error;
   }
 };
 
-// Método POST - Adicionar nova viagem
+
 export const createBook = async (newTrip) => {
   const body = {
     página1: {
@@ -47,7 +46,7 @@ export const createBook = async (newTrip) => {
   }
 };
 
-// Método PUT - Atualizar viagem existente
+
 export const updateBook = async (id, updatedTrip) => {
   const body = {
     página1: {
@@ -77,7 +76,7 @@ export const updateBook = async (id, updatedTrip) => {
   }
 };
 
-// Método DELETE - Excluir viagem
+
 export const deleteBook = async (id) => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
@@ -88,7 +87,7 @@ export const deleteBook = async (id) => {
       throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
 
-    return true; // Retorna true se a viagem foi deletada com sucesso
+    return true; 
   } catch (error) {
     console.error('Erro ao excluir viagem:', error);
     throw error;
