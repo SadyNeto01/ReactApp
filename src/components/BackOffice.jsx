@@ -3,167 +3,177 @@ import { getBooks, createBook, updateBook, deleteBook } from '../Api';
 import BookCard from './BookCard';
 
 const BackOffice = () => {
-  const [books, setBooks] = useState([]);
-  const [newBook, setNewBook] = useState({
+  const [trips, setTrips] = useState([]);
+  const [newTrip, setNewTrip] = useState({
     id: '',
-    title: '',
-    author: '',
-    coverURL: '',
+    local: '',
+    descricao: '',
+    ano: '',
   });
-  const [editingBook, setEditingBook] = useState(null);
+  const [editingTrip, setEditingTrip] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  // Carrega os livros ao iniciar o componente
+  // Carregar viagens ao iniciar
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchTrips = async () => {
       try {
         const data = await getBooks();
-        setBooks(data);
+        setTrips(data);
       } catch (error) {
-        console.error('Erro ao carregar livros:', error);
+        console.error('Erro ao carregar viagens:', error);
       }
     };
 
-    fetchBooks();
+    fetchTrips();
   }, []);
 
-  // Adicionar um novo livro
-  const handleAddBook = async () => {
-    if (!newBook.id || !newBook.title || !newBook.author || !newBook.coverURL) {
-      alert('Todos os campos são obrigatórios!');
+  // Validação de dados
+  const validateTrip = ({ local, descricao, ano }) => {
+    if (!local || !descricao || !ano) {
+      return 'Todos os campos são obrigatórios!';
+    }
+    if (!/^\d{4}$/.test(ano) || ano < 1900 || ano > new Date().getFullYear()) {
+      return 'O ano deve ser um número entre 1900 e o ano atual.';
+    }
+    return null;
+  };
+
+  // Adicionar nova viagem
+  const handleAddTrip = async () => {
+    const validationError = validateTrip(newTrip);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 
     try {
-      await createBook(newBook);
-      setBooks((prevBooks) => [...prevBooks, newBook]);
-      setNewBook({ id: '', title: '', author: '', coverURL: '' });
+      await createBook(newTrip);
+      setTrips((prevTrips) => [...prevTrips, newTrip]);
+      setNewTrip({ id: '', local: '', descricao: '', ano: '' });
       setShowAddForm(false);
     } catch (error) {
-      console.error('Erro ao adicionar livro:', error);
+      console.error('Erro ao adicionar viagem:', error);
     }
   };
 
-  // Iniciar a edição de um livro
-  const handleEditBook = (book) => {
-    setEditingBook(book);
+  // Preparar viagem para edição
+  const handleEditTrip = (trip) => {
+    setEditingTrip(trip);
     setShowEditForm(true);
   };
 
-  // Salvar alterações em um livro
-  const handleUpdateBook = async () => {
-    if (!editingBook.id || !editingBook.title || !editingBook.author || !editingBook.coverURL) {
-      alert('Todos os campos são obrigatórios!');
+  // Salvar alterações na viagem
+  const handleUpdateTrip = async () => {
+    const validationError = validateTrip(editingTrip);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 
     try {
-      await updateBook(editingBook.id, editingBook);
-      setBooks((prevBooks) =>
-        prevBooks.map((book) =>
-          book.id === editingBook.id ? editingBook : book
+      await updateBook(editingTrip.id, editingTrip);
+      setTrips((prevTrips) =>
+        prevTrips.map((trip) =>
+          trip.id === editingTrip.id ? editingTrip : trip
         )
       );
-      setEditingBook(null);
+      setEditingTrip(null);
       setShowEditForm(false);
     } catch (error) {
-      console.error('Erro ao atualizar livro:', error);
+      console.error('Erro ao atualizar viagem:', error);
     }
   };
 
-  // Excluir um livro
-  const handleDeleteBook = async (id) => {
+  // Excluir viagem
+  const handleDeleteTrip = async (id) => {
     try {
       await deleteBook(id);
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+      setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== id));
     } catch (error) {
-      console.error('Erro ao excluir livro:', error);
+      console.error('Erro ao excluir viagem:', error);
     }
   };
 
   return (
     <div className="app-background">
       <div className="app-container">
-        <h2 className="app-title">Gerenciar Livros</h2>
+        <h2 className="app-title">Gerenciar Viagens</h2>
 
-        {/* Botão para abrir/fechar o formulário de adição */}
+        {/* Botão para abrir/fechar formulário de adição */}
         <button onClick={() => setShowAddForm(!showAddForm)}>
-          {showAddForm ? 'Fechar Formulário' : 'Adicionar Livro'}
+          {showAddForm ? 'Fechar Formulário' : 'Adicionar Viagem'}
         </button>
 
-        {/* Formulário de adição de livros */}
+        {/* Formulário para adicionar viagem */}
         {showAddForm && (
           <div className="add-book-form">
-            <h3>Adicionar Livro</h3>
+            <h3>Adicionar Viagem</h3>
             <input
               type="text"
-              placeholder="Título"
-              value={newBook.title}
-              onChange={(e) =>
-                setNewBook({ ...newBook, title: e.target.value })
-              }
+              placeholder="Local"
+              value={newTrip.local}
+              onChange={(e) => setNewTrip({ ...newTrip, local: e.target.value })}
             />
             <input
               type="text"
-              placeholder="Autor"
-              value={newBook.author}
+              placeholder="Descrição"
+              value={newTrip.descricao}
               onChange={(e) =>
-                setNewBook({ ...newBook, author: e.target.value })
+                setNewTrip({ ...newTrip, descricao: e.target.value })
               }
             />
             <input
-              type="text"
-              placeholder="URL da Capa"
-              value={newBook.coverURL}
-              onChange={(e) =>
-                setNewBook({ ...newBook, coverURL: e.target.value })
-              }
+              type="number"
+              placeholder="Ano"
+              value={newTrip.ano}
+              onChange={(e) => setNewTrip({ ...newTrip, ano: e.target.value })}
             />
-            <button onClick={handleAddBook}>Salvar</button>
+            <button onClick={handleAddTrip}>Salvar</button>
           </div>
         )}
 
-        {/* Formulário de edição de livros */}
+        {/* Formulário para editar viagem */}
         {showEditForm && (
           <div className="edit-book-form">
-            <h3>Editar Livro</h3>
+            <h3>Editar Viagem</h3>
             <input
               type="text"
-              placeholder="Título"
-              value={editingBook.title}
+              placeholder="Local"
+              value={editingTrip.local}
               onChange={(e) =>
-                setEditingBook({ ...editingBook, title: e.target.value })
+                setEditingTrip({ ...editingTrip, local: e.target.value })
               }
             />
             <input
               type="text"
-              placeholder="Autor"
-              value={editingBook.author}
+              placeholder="Descrição"
+              value={editingTrip.descricao}
               onChange={(e) =>
-                setEditingBook({ ...editingBook, author: e.target.value })
+                setEditingTrip({ ...editingTrip, descricao: e.target.value })
               }
             />
             <input
-              type="text"
-              placeholder="URL da Capa"
-              value={editingBook.coverURL}
+              type="number"
+              placeholder="Ano"
+              value={editingTrip.ano}
               onChange={(e) =>
-                setEditingBook({ ...editingBook, coverURL: e.target.value })
+                setEditingTrip({ ...editingTrip, ano: e.target.value })
               }
             />
-            <button onClick={handleUpdateBook}>Salvar Alterações</button>
+            <button onClick={handleUpdateTrip}>Salvar Alterações</button>
           </div>
         )}
 
-        {/* Lista de livros */}
+        {/* Lista de viagens */}
         <div className="book-list">
-          {books.map((book) => (
-            <div key={book.id}>
-              <BookCard book={book} />
-              <button onClick={() => handleEditBook(book)}>Editar</button>
-              <button onClick={() => handleDeleteBook(book.id)}>Excluir</button>
-            </div>
+          {trips.map((trip) => (
+            <BookCard
+              key={trip.id}
+              trip={trip}
+              onEdit={handleEditTrip}
+              onDelete={handleDeleteTrip}
+            />
           ))}
         </div>
       </div>
@@ -172,3 +182,4 @@ const BackOffice = () => {
 };
 
 export default BackOffice;
+

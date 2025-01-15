@@ -1,20 +1,37 @@
 import React from 'react';
 
-const BookCard = ({ book }) => {
+const BookCard = ({ trip, onEdit, onDelete, ratings, onRate }) => {
   return (
     <div className="book-card">
-      <img
-        src={book.coverURL || 'https://via.placeholder.com/150'}
-        alt={book.title}
-        onError={(e) => {
-          e.target.src = 'https://via.placeholder.com/150'; 
-        }}
-      />
-      <h3>{book.title}</h3>
-      <p>{book.author}</p>
+      <h3>{trip.local}</h3>
+      <p>{trip.descricao}</p>
+      <p><strong>Ano:</strong> {trip.ano}</p>
+
+      {/* Avaliação (apenas para FrontOffice) */}
+      {onRate && (
+        <div className="rating">
+          <label>Avaliação: </label>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              className={`star-button ${ratings[trip.id] === star ? 'selected' : ''}`}
+              onClick={() => onRate(trip.id, star)}
+            >
+              {star}⭐
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Botões de Ação (apenas para BackOffice) */}
+      {onEdit && onDelete && (
+        <div className="actions">
+          <button onClick={() => onEdit(trip)}>Editar</button>
+          <button onClick={() => onDelete(trip.id)}>Excluir</button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default BookCard;
-

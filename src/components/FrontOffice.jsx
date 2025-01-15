@@ -3,30 +3,50 @@ import { getBooks } from '../Api';
 import BookCard from './BookCard';
 
 const FrontOffice = () => {
-  const [books, setBooks] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [ratings, setRatings] = useState({}); // Estado local para armazenar avaliações
 
+  // Carregar viagens ao iniciar
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchTrips = async () => {
       try {
-        const data = await getBooks();
-        setBooks(data);
+        const data = await getBooks(); // Chamada à API para obter as viagens
+        if (Array.isArray(data)) {
+          setTrips(data); // Atualiza o estado com as viagens recebidas
+        } else {
+          console.error('Os dados retornados não são uma lista válida:', data);
+        }
       } catch (error) {
-        console.error('Erro ao carregar livros:', error);
+        console.error('Erro ao carregar viagens:', error);
       }
     };
 
-    fetchBooks();
+    fetchTrips();
   }, []);
+
+  // Função para registrar a avaliação
+  const handleRateTrip = (id, rating) => {
+    setRatings((prevRatings) => ({ ...prevRatings, [id]: rating }));
+  };
 
   return (
     <div className="app-background">
       <div className="app-container">
-        <h2 className="app-title">Catálogo de Livros</h2>
-        <div className="book-list">
-          {books.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
-        </div>
+        <h2 className="app-title">Caderno de Viagens</h2>
+        {trips.length === 0 ? (
+          <p>Nenhuma viagem disponível no momento.</p>
+        ) : (
+          <div className="book-list">
+            {trips.map((trip) => (
+              <BookCard
+                key={trip.id}
+                trip={trip}
+                ratings={ratings}
+                onRate={handleRateTrip}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
