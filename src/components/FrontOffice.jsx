@@ -4,6 +4,7 @@ import BookCard from './BookCard';
 
 const FrontOffice = () => {
   const [trips, setTrips] = useState([]);
+  const [ratings, setRatings] = useState({}); // Estado para armazenar as avaliações
   const [searchLocal, setSearchLocal] = useState('');
   const [searchYear, setSearchYear] = useState('');
   const [filteredTrips, setFilteredTrips] = useState([]);
@@ -23,13 +24,23 @@ const FrontOffice = () => {
     fetchTrips();
   }, []);
 
+  // Função para lidar com a avaliação de uma viagem
+  const handleRating = (id, rating) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [id]: rating, // Atualiza a avaliação da viagem correspondente
+    }));
+  };
+
   // Atualiza os resultados filtrados com base nos critérios de busca
   useEffect(() => {
     const filterTrips = () => {
       const lowerCaseSearchLocal = searchLocal.toLowerCase();
       const filtered = trips.filter((trip) => {
         const matchesLocal = trip.local.toLowerCase().includes(lowerCaseSearchLocal);
-        const matchesYear = searchYear ? trip.ano === searchYear : true;
+        const matchesYear = searchYear
+          ? String(trip.ano) === String(searchYear) // Converte ambos para string para evitar problemas de comparação
+          : true;
         return matchesLocal && matchesYear;
       });
       setFilteredTrips(filtered);
@@ -64,7 +75,14 @@ const FrontOffice = () => {
         {/* Lista de Viagens */}
         <div className="book-list">
           {filteredTrips.length > 0 ? (
-            filteredTrips.map((trip) => <BookCard key={trip.id} trip={trip} />)
+            filteredTrips.map((trip) => (
+              <BookCard
+                key={trip.id}
+                trip={trip}
+                ratings={ratings} // Passa as avaliações
+                onRate={handleRating} // Passa a função de avaliação
+              />
+            ))
           ) : (
             <p>Nenhuma viagem encontrada.</p>
           )}

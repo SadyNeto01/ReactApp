@@ -1,4 +1,4 @@
-const API_URL = 'https://api.sheety.co/51b65bad1838e501d207e2f5f36dadf4/books/página1';
+const API_URL = 'https://api.sheety.co/51b65bad1838e501d207e2f5f36dadf4/trips/página1';
 
 
 export const getBooks = async () => {
