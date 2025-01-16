@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks } from '../Api';
+import { getTrips } from '../Api';
 import BookCard from './BookCard';
 
 const FrontOffice = () => {
@@ -13,7 +13,7 @@ const FrontOffice = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const data = await getBooks();
+        const data = await getTrips();
         setTrips(data);
         setFilteredTrips(data); // Inicializa os resultados filtrados
       } catch (error) {

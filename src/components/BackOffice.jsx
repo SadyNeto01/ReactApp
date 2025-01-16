@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks, createBook, updateBook, deleteBook } from '../Api';
+import { getTrips, createTrips, updateTrips, deleteTrips } from '../Api';
 import BookCard from './BookCard';
 
 const BackOffice = () => {
@@ -18,7 +18,7 @@ const BackOffice = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const data = await getBooks();
+        const data = await getTrips();
         setTrips(data);
       } catch (error) {
         console.error('Erro ao carregar viagens:', error);
@@ -48,7 +48,7 @@ const BackOffice = () => {
     }
 
     try {
-      const addedTrip = await createBook(newTrip);
+      const addedTrip = await createTrips(newTrip);
       setTrips((prevTrips) => [...prevTrips, addedTrip.página1]);
       setNewTrip({ id: '', local: '', descricao: '', ano: '' });
       setShowAddForm(false);
@@ -72,7 +72,7 @@ const BackOffice = () => {
     }
 
     try {
-      await updateBook(editingTrip.id, editingTrip);
+      await updateTrips(editingTrip.id, editingTrip);
       setTrips((prevTrips) =>
         prevTrips.map((trip) =>
           trip.id === editingTrip.id ? editingTrip : trip
@@ -88,7 +88,7 @@ const BackOffice = () => {
   // Excluir viagem
   const handleDeleteTrip = async (id) => {
     try {
-      await deleteBook(id);
+      await deleteTrips(id);
       setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== id));
     } catch (error) {
       console.error('Erro ao excluir viagem:', error);

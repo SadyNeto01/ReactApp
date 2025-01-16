@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks } from '../api';
+import { getTrips } from '../api';
 import BookCard from './BookCard';
 
 const BookList = () => {
-  const [books, setBooks] = useState([]);
+  const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const data = await getBooks();
-      setBooks(data);
+    const fetchTrips = async () => {
+      const data = await getTrips();
+      setTrips(data);
     };
-    fetchBooks();
+    fetchTrips();
   }, []);
 
   return (
     <div>
-      {books.map((book) => (
-        <BookCard key={book.id} book={book} />
+      {trips.map((trip) => (
+        <BookCard key={trip.id} trip={trip} />
       ))}
     </div>
   );

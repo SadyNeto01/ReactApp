@@ -1,7 +1,7 @@
 const API_URL = 'https://api.sheety.co/51b65bad1838e501d207e2f5f36dadf4/trips/página1';
 
 
-export const getBooks = async () => {
+export const getTrips = async () => {
   try {
     const response = await fetch(API_URL);
     if (!response.ok) {
@@ -16,7 +16,7 @@ export const getBooks = async () => {
 };
 
 
-export const createBook = async (newTrip) => {
+export const createTrips = async (newTrip) => {
   const body = {
     página1: {
       id: newTrip.id,
@@ -47,7 +47,7 @@ export const createBook = async (newTrip) => {
 };
 
 
-export const updateBook = async (id, updatedTrip) => {
+export const updateTrips = async (id, updatedTrip) => {
   const body = {
     página1: {
       local: updatedTrip.local,
@@ -77,7 +77,7 @@ export const updateBook = async (id, updatedTrip) => {
 };
 
 
-export const deleteBook = async (id) => {
+export const deleteTrips = async (id) => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
