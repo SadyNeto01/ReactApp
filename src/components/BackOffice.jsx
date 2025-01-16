@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getTrips, createTrips, updateTrips, deleteTrips } from '../Api';
-import BookCard from './BookCard';
+import TripCard from './TripCard';
 
 const BackOffice = () => {
   const [trips, setTrips] = useState([]);
@@ -107,7 +107,7 @@ const BackOffice = () => {
 
         {/* Formulário para adicionar */}
         {showAddForm && (
-          <div className="add-book-form">
+          <div className="add-trip-form">
             <h3>Adicionar Viagem</h3>
             <input
               type="text"
@@ -135,7 +135,7 @@ const BackOffice = () => {
 
         {/* Formulário para editar */}
         {showEditForm && (
-          <div className="edit-book-form">
+          <div className="edit-trip-form">
             <h3>Editar Viagem</h3>
             <input
               type="text"
@@ -166,9 +166,9 @@ const BackOffice = () => {
         )}
 
         {/* Lista de viagens */}
-        <div className="book-list">
+        <div className="trip-list">
           {trips.map((trip) => (
-            <BookCard
+            <TripCard
               key={trip.id}
               trip={trip}
               onEdit={handleEditTrip}

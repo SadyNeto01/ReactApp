@@ -81,7 +81,7 @@ button:hover {
 }
 
 /* Lista de Viagens */
-.book-list {
+.trip-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 cards por linha */
   gap: 20px;
@@ -91,7 +91,7 @@ button:hover {
 }
 
 /* Estado Compacto */
-.book-card.compact {
+.trip-card.compact {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -102,12 +102,12 @@ button:hover {
   cursor: pointer;
 }
 
-.book-card.compact:hover {
+.trip-card.compact:hover {
   transform: scale(1.05);
 }
 
 /* Estado Expandido */
-.book-card.expanded {
+.trip-card.expanded {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -125,26 +125,26 @@ button:hover {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.book-card.expanded .card-header {
+.trip-card.expanded .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.book-card.expanded .card-location {
+.trip-card.expanded .card-location {
   font-size: 1.4rem;
   font-weight: bold;
   color: #333;
 }
 
-.book-card.expanded .card-year {
+.trip-card.expanded .card-year {
   font-size: 1.2rem;
   font-weight: bold;
   color: #777;
 }
 
-.book-card.expanded .card-description {
+.trip-card.expanded .card-description {
   font-size: 1rem;
   color: #555;
   text-align: justify;
@@ -184,7 +184,7 @@ button:hover {
 }
 
 /* Fixando Botão de Fechar */
-.book-card.expanded .close-button {
+.trip-card.expanded .close-button {
   background-color: #dc3545;
   color: white;
   border: none;
@@ -195,7 +195,7 @@ button:hover {
   margin-top: 10px;
 }
 
-.book-card.expanded .close-button:hover {
+.trip-card.expanded .close-button:hover {
   background-color: #c82333;
 }
 
@@ -285,13 +285,13 @@ button:hover {
 
 /* Responsividade */
 @media (max-width: 1200px) {
-  .book-list {
+  .trip-list {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .book-list {
+  .trip-list {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -301,7 +301,7 @@ button:hover {
 }
 
 @media (max-width: 480px) {
-  .book-list {
+  .trip-list {
     grid-template-columns: 1fr;
   }
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getTrips } from '../api';
-import BookCard from './BookCard';
+import TripCard from './TripCard';
 
-const BookList = () => {
+const TripList = () => {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -16,10 +16,10 @@ const BookList = () => {
   return (
     <div>
       {trips.map((trip) => (
-        <BookCard key={trip.id} trip={trip} />
+        <TripCard key={trip.id} trip={trip} />
       ))}
     </div>
   );
 };
 
-export default BookList;
+export default TripList;

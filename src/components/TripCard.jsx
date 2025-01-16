@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BookCard = ({ trip, ratings, onRate, isBackOffice, onEdit, onDelete }) => {
+const TripCard = ({ trip, ratings, onRate, isBackOffice, onEdit, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedRating, setSelectedRating] = useState(
     ratings && ratings[trip.id] ? ratings[trip.id] : 0
@@ -17,7 +17,7 @@ const BookCard = ({ trip, ratings, onRate, isBackOffice, onEdit, onDelete }) => 
 
   return (
     <div
-      className={`book-card ${isExpanded ? 'expanded' : 'compact'}`}
+      className={`trip-card ${isExpanded ? 'expanded' : 'compact'}`}
       onClick={!isExpanded ? toggleExpand : undefined}
     >
       {/* Estado Compacto */}
@@ -144,4 +144,4 @@ const BookCard = ({ trip, ratings, onRate, isBackOffice, onEdit, onDelete }) => 
   );
 };
 
-export default BookCard;
+export default TripCard;

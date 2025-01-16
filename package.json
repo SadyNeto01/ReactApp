@@ -1,7 +1,7 @@
 {
-    "name": "simple-book-manager",
+    "name": "simple-trip-manager",
     "version": "1.0.0",
-    "description": "Uma aplicação simples para gerenciar livros com React e uma API REST.",
+    "description": "Uma aplicação simples para gerenciar viagens com React e uma API REST.",
     "main": "index.jsx",
     "scripts": {
         "start": "react-scripts start",
@@ -12,7 +12,7 @@
     "keywords": [
         "react",
         "crud",
-        "books",
+        "trips",
         "api-rest"
     ],
     "author": "Seu Nome",

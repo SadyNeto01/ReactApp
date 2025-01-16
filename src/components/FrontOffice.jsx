@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getTrips } from '../Api';
-import BookCard from './BookCard';
+import TripCard from './TripCard';
 
 const FrontOffice = () => {
   const [trips, setTrips] = useState([]);
@@ -73,10 +73,10 @@ const FrontOffice = () => {
         </div>
 
         {/* Lista de Viagens */}
-        <div className="book-list">
+        <div className="trip-list">
           {filteredTrips.length > 0 ? (
             filteredTrips.map((trip) => (
-              <BookCard
+              <TripCard
                 key={trip.id}
                 trip={trip}
                 ratings={ratings} // Passa as avaliações
